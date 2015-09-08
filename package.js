@@ -1,37 +1,35 @@
 Package.describe({
-  name: 'manuel:viewmodel2',
-  summary: "MVVM, two-way data binding, and components for Meteor. Similar to Angular and Knockout.",
+  name: 'manuel:viewmodel-debug',
+  summary: "Debug information for the ViewModel package.",
   version: "2.0.0",
-  git: "https://github.com/ManuelDeLeon/viewmodel"
+  git: "https://github.com/ManuelDeLeon/viewmodel-debug",
+  debugOnly: false
 });
 
 var CLIENT = 'client';
 
 Package.onUse(function(api) {
   api.use([
-    'coffeescript',
-    'blaze',
-    'manuel:reactivearray'
+    'coffeescript'
   ], CLIENT);
 
   api.addFiles([
-    'lib/viewmodel.coffee'
+    'lib/viewmodel-debug.coffee'
   ], CLIENT);
 
-  api.export('ViewModel2', CLIENT);
+  api.export('VmCheck', CLIENT);
+
 });
 
 Package.onTest(function(api) {
-
   api.use([
-    'coffeescript',
-    'peterellisjones:describe'
+    'coffeescript'
   ], CLIENT);
 
   api.addFiles([
-    'lib/viewmodel.coffee',
-    'tests/static.coffee'
+    'lib/viewmodel-debug.coffee'
   ], CLIENT);
 
-  api.export('ViewModel2', CLIENT);
+  api.export('VmCheck', CLIENT);
+
 });
