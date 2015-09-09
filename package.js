@@ -3,7 +3,7 @@ Package.describe({
   summary: "Debug information for the ViewModel package.",
   version: "2.0.0",
   git: "https://github.com/ManuelDeLeon/viewmodel-debug",
-  debugOnly: false
+  debugOnly: true
 });
 
 var CLIENT = 'client';
@@ -14,7 +14,7 @@ Package.onUse(function(api) {
   ], CLIENT);
 
   api.addFiles([
-    'lib/viewmodel-debug.coffee'
+    'lib/viewmodel-checks.coffee'
   ], CLIENT);
 
   api.export('VmCheck', CLIENT);
@@ -23,11 +23,13 @@ Package.onUse(function(api) {
 
 Package.onTest(function(api) {
   api.use([
-    'coffeescript'
+    'coffeescript',
+    'peterellisjones:describe'
   ], CLIENT);
 
   api.addFiles([
-    'lib/viewmodel-debug.coffee'
+    'lib/viewmodel-checks.coffee',
+    'tests/addBinding.coffee'
   ], CLIENT);
 
   api.export('VmCheck', CLIENT);
