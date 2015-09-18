@@ -29,7 +29,7 @@ Package.onTest(function(api) {
 
   api.addFiles([
     'lib/viewmodel-checks.coffee',
-    'tests/addBinding.coffee'
+    'tests/checks.coffee'
   ], CLIENT);
 
   api.export('VmCheck', CLIENT);
