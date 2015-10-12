@@ -32,6 +32,7 @@ Package.onTest(function(api) {
 
   api.addFiles([
     'lib/viewmodel-checks.coffee',
+    'tests/sinon-restore.js',
     'tests/checks.coffee'
   ], CLIENT);
 
