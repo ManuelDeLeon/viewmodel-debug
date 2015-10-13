@@ -71,7 +71,7 @@ checks =
     name = templateName(templateInstance.view.name)
     return if name is 'body'
     if templateInstance.firstNode isnt templateInstance.lastNode
-      console.error "Template '#{name}' isn't wrapped in an element. The contents of a template must be inside an element. It could be any kind: a div, span, form, etc." + ref tag
+      console.error "Template '#{name}' isn't wrapped in an element. The contents of a template must be inside an element. It could be anything: a div, span, form, etc." + ref tag
     else
       checks['T#onRendered'] parentTemplate(templateInstance)
 
