@@ -26,7 +26,7 @@ checks =
     if binding.bindIf and not _.isFunction binding.bindIf
       console.error "Optional property 'bindIf' has to be a function when passed to ViewModel.addBinding." + ref tag
 
-    if binding.selector and not _.isString binding.bindIf
+    if binding.selector and not _.isString binding.selector
       console.error "Optional property 'selector' has to be a string when passed to ViewModel.addBinding." + ref tag
 
     if binding.events and not isObject binding.events
@@ -62,18 +62,6 @@ checks =
     if context and !isObject(context)
       name = template.viewName.substr(template.viewName.indexOf('.') + 1)
       console.error "Could not create the view model for template '#{name}'. If you pass a context to `Template.#{name}.createViewModel` it must be an object." + ref tag
-
-    return
-
-  'T#onRendered': (templateInstance) ->
-    return if not templateInstance
-    tag = 'viewmodels#restrictions'
-    name = templateName(templateInstance.view.name)
-    return if name is 'body'
-    if templateInstance.firstNode isnt templateInstance.lastNode
-      console.error "Template '#{name}' isn't wrapped in an element. The contents of a template must be inside an element. It could be anything: a div, span, form, etc." + ref tag
-    else
-      checks['T#onRendered'] parentTemplate(templateInstance)
 
     return
 
