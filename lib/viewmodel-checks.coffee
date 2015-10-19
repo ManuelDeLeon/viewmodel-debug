@@ -5,7 +5,7 @@ templateName = (str) -> str.substr(str.indexOf('.') + 1)
 parentTemplate = (templateInstance) ->
   view = templateInstance.view?.parentView
   while view
-    if view.name.substring(0, 9) == 'Template.'
+    if view.name.substring(0, 9) is 'Template.' or view.name is 'body'
       return view.templateInstance()
     view = view.parentView
   return
