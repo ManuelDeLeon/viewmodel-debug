@@ -71,6 +71,19 @@ checks =
       name = templateName(viewmodel.templateInstance.view.name)
       console.error "The view model for template '#{name}' doesn't have a '#{prop}' #{type}." + ref tag
 
+  '#parent': (args...) ->
+    tag = 'viewmodels#parent'
+    if args.length
+      console.error "viewmodel.parent() doesn't take any arguments. It just returns the single parent view model." + ref tag
+
+  '#children': (args...) ->
+    tag = 'viewmodels#children'
+    return if args.length is 0
+    if args.length > 1
+      console.error "viewmodel.children only takes 1 optional parameter (a string or a function)." + ref tag
+    else if not (_.isFunction(args[0]) or _.isString(args[0]))
+      console.error "viewmodel.children takes an optional parameter which can be a string or a function." + ref tag
+
 
 VmCheck = (key, args...) ->
   if checks[key]

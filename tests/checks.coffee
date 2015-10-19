@@ -117,3 +117,35 @@ describe "VmChecks", ->
       VmCheck 'vmProp', 'name', @viewmodel
       assert.isFalse @errorStub.called
       return
+
+  describe "#parent", ->
+
+    it "should accept no arguments", ->
+      VmCheck "#parent"
+      assert.isFalse @errorStub.called
+
+    it "should not accept arguments", ->
+      VmCheck "#parent", 'X'
+      assert.isTrue @errorStub.called
+
+  describe "#children", ->
+
+    it "should accept no arguments", ->
+      VmCheck "#children"
+      assert.isFalse @errorStub.called
+
+    it "should accept a string", ->
+      VmCheck "#children", 'X'
+      assert.isFalse @errorStub.called
+
+    it "should accept a function", ->
+      VmCheck "#children", ->
+      assert.isFalse @errorStub.called
+
+    it "should not accept a number", ->
+      VmCheck "#children", 1
+      assert.isTrue @errorStub.called
+
+    it "should not accept an object", ->
+      VmCheck "#children", 1
+      assert.isTrue @errorStub.called
