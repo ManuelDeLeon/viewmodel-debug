@@ -72,6 +72,10 @@ describe "VmChecks", ->
       VmCheck "@addBinding", { name: "value", autorun: 1 }
       assert.isTrue @errorStub.called
 
+    it "priority has to be a number", ->
+      VmCheck "@addBinding", { name: "value", bind: (->), priority: 'A' }
+      assert.isTrue @errorStub.called
+
   describe "getBindHelper", ->
     it "accepts a view model", ->
       templateInstance =

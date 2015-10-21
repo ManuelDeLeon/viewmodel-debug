@@ -38,6 +38,9 @@ checks =
     if not ( binding.bind or binding.events or binding.autorun )
       console.error "ViewModel.addBinding requires at least one of: bind, events, autorun." + ref tag
 
+    if binding.priority and not _.isNumber(binding.priority)
+      console.error "Optional property 'priority' has to be a number when passed to ViewModel.addBinding." + ref tag
+
     return
 
   'T#viewmodel': (initial, template) ->
