@@ -153,3 +153,33 @@ describe "VmChecks", ->
     it "should not accept an object", ->
       VmCheck "#children", 1
       assert.isTrue @errorStub.called
+
+  describe "@onRendered", ->
+
+    it "should accept undefined autorun", ->
+      VmCheck "@onRendered", undefined
+      assert.isFalse @errorStub.called
+
+    it "should accept autorun function ", ->
+      VmCheck "@onRendered", ->
+      assert.isFalse @errorStub.called
+
+    it "should accept array of autorun functions ", ->
+      VmCheck "@onRendered", [ (->) ]
+      assert.isFalse @errorStub.called
+
+    it "should not accept autorun string", ->
+      VmCheck "@onRendered", "X"
+      assert.isTrue @errorStub.called
+
+    it "should not accept autorun object", ->
+      VmCheck "@onRendered", "X"
+      assert.isTrue @errorStub.called
+
+    it "should accept array of autorun strings", ->
+      VmCheck "@onRendered", [ '' ]
+      assert.isTrue @errorStub.called
+
+    it "should accept array of autorun objects", ->
+      VmCheck "@onRendered", [ {} ]
+      assert.isTrue @errorStub.called

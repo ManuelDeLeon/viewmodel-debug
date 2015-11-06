@@ -1,5 +1,5 @@
 ref = (tag) -> " See https://viewmodel.org/docs/#{tag} for more information."
-isObject = (obj) -> _.isObject(obj) and !_.isArray(obj) and !_.isFunction(obj)
+isObject = (obj) -> _.isObject(obj) and !(obj instanceof Array) and !_.isFunction(obj)
 templateName = (str) -> str.substr(str.indexOf('.') + 1)
 
 parentTemplate = (templateInstance) ->
@@ -87,10 +87,16 @@ checks =
     else if not (_.isFunction(args[0]) or _.isString(args[0]))
       console.error "viewmodel.children takes an optional parameter which can be a string or a function." + ref tag
 
+  '@onRendered': (autorun) ->
+    tag = 'viewmodels#autorun'
+    return if !autorun or _.isFunction(autorun)
+    return if (autorun instanceof Array) and (!autorun.length  or _.isFunction(autorun[0]))
+    console.error "autorun has to be function or an array of functions." + ref tag
+
 
 VmCheck = (key, args...) ->
   if checks[key]
     checks[key] args...
   else
-    console.warn "Don't have debug information for [#{key}]. Please report it at https://viewmodel.org/help. In the mean time you can turn off checks with `ViewModel.ignoreErrors = true`." + ref 'staticMethods#ignoreErrors'
+    console.warn "Don't have debug information for [#{key}]. Please report it at https://viewmodel.org/help. In the mean time you can turn off checks with `ViewModel.ignoreErrors = true`." + ref 'misc#ignoreErrors'
   return
