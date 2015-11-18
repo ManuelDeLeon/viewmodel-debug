@@ -10,7 +10,7 @@ var CLIENT = 'client';
 
 Package.onUse(function(api) {
   api.use([
-    'coffeescript',
+    'coffeescript@1.0.10',
     'underscore@1.0.4'
   ], CLIENT);
 
@@ -24,7 +24,7 @@ Package.onUse(function(api) {
 
 Package.onTest(function(api) {
   api.use([
-    'coffeescript',
+    'coffeescript@1.0.10',
     'underscore@1.0.4',
     'practicalmeteor:mocha',
     'practicalmeteor:sinon'
