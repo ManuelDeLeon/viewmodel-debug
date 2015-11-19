@@ -93,6 +93,10 @@ checks =
     return if (autorun instanceof Array) and (!autorun.length  or _.isFunction(autorun[0]))
     console.error "autorun has to be function or an array of functions." + ref tag
 
+  '#constructor': (initial) ->
+    tag = 'misc#hotcodepush'
+    return if !initial?.persist? or _.isBoolean(initial.persist) or _.isFunction(initial.persist)
+    console.error "persist has to be a boolean or a function that returns a boolean." + ref tag
 
 VmCheck = (key, args...) ->
   if checks[key]

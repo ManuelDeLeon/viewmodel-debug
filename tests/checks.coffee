@@ -183,3 +183,22 @@ describe "VmChecks", ->
     it "should accept array of autorun objects", ->
       VmCheck "@onRendered", [ {} ]
       assert.isTrue @errorStub.called
+
+  describe "#constructor", ->
+
+    describe "persist", ->
+      it "accepts boolean", ->
+        VmCheck "#constructor", { persist: true }
+        assert.isFalse @errorStub.called
+      it "accepts function", ->
+        VmCheck "#constructor", { persist: -> }
+        assert.isFalse @errorStub.called
+      it "rejects string", ->
+        VmCheck "#constructor", { persist: 'true' }
+        assert.isTrue @errorStub.called
+      it "rejects number", ->
+        VmCheck "#constructor", { persist: 0 }
+        assert.isTrue @errorStub.called
+      it "rejects object", ->
+        VmCheck "#constructor", { persist: {} }
+        assert.isTrue @errorStub.called
