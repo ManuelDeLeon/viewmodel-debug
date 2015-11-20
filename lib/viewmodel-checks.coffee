@@ -1,4 +1,4 @@
-ref = (tag) -> " See https://viewmodel.org/docs/#{tag} for more information."
+ref = (tag) -> " See https://viewmodel.meteor.com/docs/#{tag} for more information."
 isObject = (obj) -> _.isObject(obj) and !(obj instanceof Array) and !_.isFunction(obj)
 templateName = (str) -> str.substr(str.indexOf('.') + 1)
 
@@ -102,5 +102,5 @@ VmCheck = (key, args...) ->
   if checks[key]
     checks[key] args...
   else
-    console.warn "Don't have debug information for [#{key}]. Please report it at https://viewmodel.org/help. In the mean time you can turn off checks with `ViewModel.ignoreErrors = true`." + ref 'misc#ignoreErrors'
+    console.warn "Don't have debug information for [#{key}]. Please report it at https://viewmodel.meteor.com/help. In the mean time you can turn off checks with `ViewModel.ignoreErrors = true`." + ref 'misc#ignoreErrors'
   return
