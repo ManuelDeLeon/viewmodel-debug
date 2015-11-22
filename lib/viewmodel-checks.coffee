@@ -50,6 +50,15 @@ checks =
       name = template.viewName.substr(template.viewName.indexOf('.') + 1)
       console.error "Could not create the view model for template '#{name}'. Creating a view model requires an object or a function that returns an object." + ref tag
 
+    if initial.events
+      name = template.viewName.substr(template.viewName.indexOf('.') + 1)
+      tag = 'viewmodels#events'
+      if Object.prototype.toString.call(initial.events) is '[object Object]'
+        for eventName, eventFunction of initial.events when not _.isFunction(eventFunction)
+          console.error "Could not add the events for template '#{name}'. The event '#{eventName}' doesn't map to a function." + ref tag
+          break
+      else
+        console.error "Could not add the events for template '#{name}'. The events property needs an object." + ref tag
     return
 
   'getBindHelper': (templateInstance) ->

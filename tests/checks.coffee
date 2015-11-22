@@ -29,6 +29,42 @@ describe "VmChecks", ->
       VmCheck "T#viewmodel", "", @template
       assert.isTrue @errorStub.called
 
+    describe "events", ->
+
+      it "accepts object with String: Function", ->
+        initial =
+          events:
+            a: ->
+            b: ->
+        VmCheck "T#viewmodel", initial, @template
+        assert.isFalse @errorStub.called
+
+      it "rejects object with String: number", ->
+        initial =
+          events:
+            a: ->
+            b: 1
+        VmCheck "T#viewmodel", initial, @template
+        assert.isTrue @errorStub.called
+
+      it "rejects number", ->
+        initial =
+          events: 1
+        VmCheck "T#viewmodel", initial, @template
+        assert.isTrue @errorStub.called
+
+      it "rejects function", ->
+        initial =
+          events: ->
+        VmCheck "T#viewmodel", initial, @template
+        assert.isTrue @errorStub.called
+
+      it "rejects array", ->
+        initial =
+          events: []
+        VmCheck "T#viewmodel", initial, @template
+        assert.isTrue @errorStub.called
+
 
   describe "@addBinding", ->
 
