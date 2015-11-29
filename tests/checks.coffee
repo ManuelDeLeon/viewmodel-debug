@@ -205,19 +205,23 @@ describe "VmChecks", ->
       assert.isFalse @errorStub.called
 
     it "should not accept autorun string", ->
-      VmCheck "@onRendered", "X"
+      VmCheck "@onRendered", "X", { viewName: 'body' }
       assert.isTrue @errorStub.called
 
     it "should not accept autorun object", ->
-      VmCheck "@onRendered", "X"
+      VmCheck "@onRendered", "X", { viewName: 'body' }
       assert.isTrue @errorStub.called
 
-    it "should accept array of autorun strings", ->
-      VmCheck "@onRendered", [ '' ]
+    it "should not accept array of autorun strings", ->
+      VmCheck "@onRendered", [ '' ], { viewName: 'body' }
       assert.isTrue @errorStub.called
 
-    it "should accept array of autorun objects", ->
-      VmCheck "@onRendered", [ {} ]
+    it "should not accept array of autorun objects", ->
+      VmCheck "@onRendered", [ {} ], { viewName: 'body' }
+      assert.isTrue @errorStub.called
+
+    it "should not accept array without functions", ->
+      VmCheck "@onRendered", [ (->), 0, (->) ], { viewName: 'body' }
       assert.isTrue @errorStub.called
 
   describe "#constructor", ->

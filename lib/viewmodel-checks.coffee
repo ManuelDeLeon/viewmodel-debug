@@ -1,6 +1,9 @@
 ref = (tag) -> " See https://viewmodel.meteor.com/docs/#{tag} for more information."
 isObject = (obj) -> _.isObject(obj) and !(obj instanceof Array) and !_.isFunction(obj)
-templateName = (str) -> str.substr(str.indexOf('.') + 1)
+
+templateName = (template) ->
+  name = template.viewName or template.view.name
+  if name is 'body' then name else name.substr(name.indexOf('.') + 1)
 
 parentTemplate = (templateInstance) ->
   view = templateInstance.view?.parentView
@@ -47,11 +50,11 @@ checks =
     tag = 'viewmodels#defining'
 
     if not (isObject(initial) or _.isFunction(initial))
-      name = template.viewName.substr(template.viewName.indexOf('.') + 1)
+      name = templateName template
       console.error "Could not create the view model for template '#{name}'. Creating a view model requires an object or a function that returns an object." + ref tag
 
     if initial.events
-      name = template.viewName.substr(template.viewName.indexOf('.') + 1)
+      name = templateName template
       tag = 'viewmodels#events'
       if Object.prototype.toString.call(initial.events) is '[object Object]'
         for eventName, eventFunction of initial.events when not _.isFunction(eventFunction)
@@ -64,7 +67,7 @@ checks =
   'getBindHelper': (templateInstance) ->
     tag = 'viewmodels#defining'
     if not templateInstance.viewmodel
-      name = templateName(templateInstance.view.name)
+      name = templateName templateInstance
       console.error "The template '#{name}' doesn't have a view model associated with it. No `Template.#{name}.viewmodel` found in the code." + ref tag
 
     return
@@ -72,7 +75,7 @@ checks =
   'T#createViewModel': (context, template) ->
     tag = 'testing#createViewModel'
     if context and !isObject(context)
-      name = template.viewName.substr(template.viewName.indexOf('.') + 1)
+      name = templateName template
       console.error "Could not create the view model for template '#{name}'. If you pass a context to `Template.#{name}.createViewModel` it must be an object." + ref tag
 
     return
@@ -80,7 +83,7 @@ checks =
   'vmProp': (prop, viewmodel, type = 'property') ->
     tag = 'viewmodels#defining'
     if not viewmodel[prop]
-      name = templateName(viewmodel.templateInstance.view.name)
+      name = templateName viewmodel.templateInstance
       console.error "The view model for template '#{name}' doesn't have a '#{prop}' #{type}." + ref tag
 
   '#parent': (args...) ->
@@ -96,11 +99,12 @@ checks =
     else if not (_.isFunction(args[0]) or _.isString(args[0]))
       console.error "viewmodel.children takes an optional parameter which can be a string or a function." + ref tag
 
-  '@onRendered': (autorun) ->
+  '@onRendered': (autorun, template) ->
     tag = 'viewmodels#autorun'
     return if !autorun or _.isFunction(autorun)
-    return if (autorun instanceof Array) and (!autorun.length  or _.isFunction(autorun[0]))
-    console.error "autorun has to be function or an array of functions." + ref tag
+    return if (autorun instanceof Array) and autorun.length and _.every(autorun, _.isFunction)
+    name = templateName template
+    console.error "autorun on view model for template '#{name}' has to be function or an array of functions." + ref tag
 
   '#constructor': (initial) ->
     tag = 'misc#hotcodepush'
