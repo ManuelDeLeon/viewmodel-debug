@@ -111,6 +111,16 @@ checks =
     return if !initial?.persist? or _.isBoolean(initial.persist) or _.isFunction(initial.persist)
     console.error "persist has to be a boolean or a function that returns a boolean." + ref tag
 
+  'T#viewmodelArgs': (template, args) ->
+    tag = 'viewmodels#defining'
+
+    if args.length isnt 1
+      name = templateName template
+      console.error "Could not create the view model for template '#{name}'. Creating a view model only requires 1 parameter (an object or a function that returns an object). You supplied #{args.length} parameters." + ref tag
+    else if not (isObject(args[0]) or _.isFunction(args[0]))
+      name = templateName template
+      console.error "Could not create the view model for template '#{name}'. Creating a view model requires an object or a function that returns an object." + ref tag
+
 VmCheck = (key, args...) ->
   if checks[key]
     checks[key] args...

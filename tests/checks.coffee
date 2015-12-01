@@ -6,6 +6,38 @@ describe "VmChecks", ->
   afterEach ->
     sinon.restoreAll()
 
+  describe "T#viewmodelArgs", ->
+
+    beforeEach ->
+      @template =
+        viewName: 'A'
+
+    it "should accept an object", ->
+      VmCheck "T#viewmodelArgs", @template, [{}]
+      assert.isFalse @errorStub.called
+
+    it "should accept a function", ->
+      VmCheck "T#viewmodelArgs", @template, [(->)]
+      assert.isFalse @errorStub.called
+
+    it "rejects an empty array", ->
+      VmCheck "T#viewmodelArgs", @template, []
+      assert.isTrue @errorStub.called
+
+    it "rejects a number", ->
+      VmCheck "T#viewmodelArgs", @template, [1]
+      assert.isTrue @errorStub.called
+
+    it "rejects a string", ->
+      VmCheck "T#viewmodelArgs", @template, ["1"]
+      assert.isTrue @errorStub.called
+
+    it "rejects two objects", ->
+      VmCheck "T#viewmodelArgs", @template, [{},{}]
+      assert.isTrue @errorStub.called
+
+
+
   describe "T#viewmodel", ->
 
     beforeEach ->
