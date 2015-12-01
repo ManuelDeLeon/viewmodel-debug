@@ -13,6 +13,28 @@ parentTemplate = (templateInstance) ->
     view = view.parentView
   return
 
+isEventSupported = do ->
+  TAGNAMES =
+    'select': 'input'
+    'change': 'input'
+    'submit': 'form'
+    'reset': 'form'
+    'error': 'img'
+    'load': 'img'
+    'abort': 'img'
+
+  eventSupported = (eventName) ->
+    el = document.createElement(TAGNAMES[eventName] or 'div')
+    eventName = 'on' + eventName
+    isSupported = eventName of el
+    if !isSupported
+      el.setAttribute eventName, 'return;'
+      isSupported = typeof el[eventName] == 'function'
+    el = null
+    isSupported
+
+  eventSupported
+
 checks =
   '@addBinding': (binding) ->
     tag = 'bindings#bindingObject'
@@ -120,6 +142,11 @@ checks =
     else if not (isObject(args[0]) or _.isFunction(args[0]))
       name = templateName template
       console.error "Could not create the view model for template '#{name}'. Creating a view model requires an object or a function that returns an object." + ref tag
+
+  '$default': (bindArg) ->
+    if not isEventSupported(bindArg.bindName)
+      name = templateName bindArg.templateInstance
+      console.error "There isn't a bind or event called '#{bindArg.bindName}' on template '#{name}'." + ref 'bindings'
 
 VmCheck = (key, args...) ->
   if checks[key]
