@@ -102,12 +102,6 @@ checks =
 
     return
 
-  'vmProp': (prop, viewmodel, type = 'property') ->
-    tag = 'viewmodels#defining'
-    if not viewmodel[prop]
-      name = templateName viewmodel.templateInstance
-      console.error "The view model for template '#{name}' doesn't have a '#{prop}' #{type}." + ref tag
-
   '#parent': (args...) ->
     tag = 'viewmodels#parent'
     if args.length

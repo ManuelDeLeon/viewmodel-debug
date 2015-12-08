@@ -172,23 +172,6 @@ describe "VmChecks", ->
       VmCheck 'T#createViewModel', (->) , @template
       assert.isTrue @errorStub.called
 
-  describe "vmProp", ->
-
-    beforeEach ->
-      @viewmodel =
-        templateInstance:
-          view:
-            name: 'Template.A'
-
-    it "errors when view model doesn't have property", ->
-      VmCheck 'vmProp', 'name', @viewmodel
-      assert.isTrue @errorStub.called
-
-    it "accepts when view model has property", ->
-      @viewmodel.name = ->
-      VmCheck 'vmProp', 'name', @viewmodel
-      assert.isFalse @errorStub.called
-      return
 
   describe "#parent", ->
 
