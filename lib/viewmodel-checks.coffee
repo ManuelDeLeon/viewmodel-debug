@@ -142,6 +142,12 @@ checks =
       name = templateName bindArg.templateInstance
       console.error "There isn't a bind or event called '#{bindArg.bindName}' on template '#{name}'." + ref 'bindings'
 
+  '@saveUrl': (viewmodel) ->
+    tag = 'misc#stateonurl'
+    if viewmodel._id and not viewmodel.vmTag
+      name = templateName viewmodel.templateInstance
+      console.error "If you're going to put '_id' on the url you must define a 'vmTag' on the view model. This is for the view model for template '#{name}'." + ref tag
+
 VmCheck = (key, args...) ->
   if checks[key]
     checks[key] args...

@@ -271,3 +271,31 @@ describe "VmChecks", ->
             name: 'Template.A'
       VmCheck '$default', bindArg
       assert.isTrue @errorStub.called
+
+  describe "@saveUrl", ->
+    it "accepts vm without _id and vmTag", ->
+      vm = {}
+      VmCheck '@saveUrl', vm
+      assert.isFalse @errorStub.called
+
+    it "accepts vm with _id and vmTag", ->
+      vm =
+        _id: ->
+        vmTag: ->
+      VmCheck '@saveUrl', vm
+      assert.isFalse @errorStub.called
+
+    it "accepts vm with vmTag", ->
+      vm =
+        vmTag: ->
+      VmCheck '@saveUrl', vm
+      assert.isFalse @errorStub.called
+
+    it "doesn't accept vm with _id", ->
+      vm =
+        _id: ->
+        templateInstance:
+          view:
+            name: 'Template.A'
+      VmCheck '@saveUrl', vm
+      assert.isTrue @errorStub.called
