@@ -1,4 +1,4 @@
-ref = (tag) -> " See https://viewmodel.meteor.com/docs/#{tag} for more information."
+ref = (tag) -> " See https://viewmodel.org/docs/#{tag} for more information."
 isObject = (obj) -> _.isObject(obj) and !(obj instanceof Array) and !_.isFunction(obj)
 
 templateName = (template) ->
@@ -94,14 +94,6 @@ checks =
 
     return
 
-  'T#createViewModel': (context, template) ->
-    tag = 'testing#createViewModel'
-    if context and !isObject(context)
-      name = templateName template
-      console.error "Could not create the view model for template '#{name}'. If you pass a context to `Template.#{name}.createViewModel` it must be an object." + ref tag
-
-    return
-
   '#parent': (args...) ->
     tag = 'viewmodels#parent'
     if args.length
@@ -152,5 +144,5 @@ VmCheck = (key, args...) ->
   if checks[key]
     checks[key] args...
   else
-    console.warn "Don't have debug information for [#{key}]. Please report it at https://viewmodel.meteor.com/help. In the mean time you can turn off checks with `ViewModel.ignoreErrors = true`." + ref 'misc#ignoreErrors'
+    console.warn "Don't have debug information for [#{key}]. Please report it at https://viewmodel.org/help. In the mean time you can turn off checks with `ViewModel.ignoreErrors = true`." + ref 'misc#ignoreErrors'
   return

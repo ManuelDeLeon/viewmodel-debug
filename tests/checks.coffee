@@ -160,18 +160,6 @@ describe "VmChecks", ->
       VmCheck "getBindHelper", templateInstance
       assert.isTrue @errorStub.called
 
-  describe "T#createViewModel", ->
-    beforeEach ->
-      @template =
-        viewName: 'A'
-    it "doesn't check undefined contexts", ->
-      VmCheck 'T#createViewModel', undefined , @template
-      assert.isFalse @errorStub.called
-
-    it "rejects a function for context", ->
-      VmCheck 'T#createViewModel', (->) , @template
-      assert.isTrue @errorStub.called
-
 
   describe "#parent", ->
 
