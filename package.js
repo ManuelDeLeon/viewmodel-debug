@@ -1,7 +1,7 @@
 Package.describe({
   name: 'manuel:viewmodel-debug',
   summary: "Debug information for the ViewModel package.",
-  version: "2.6.1",
+  version: "2.6.2",
   git: "https://github.com/ManuelDeLeon/viewmodel-debug",
   debugOnly: true
 });

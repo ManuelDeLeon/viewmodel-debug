@@ -28,8 +28,9 @@ isEventSupported = do ->
     eventName = 'on' + eventName
     isSupported = eventName of el
     if !isSupported
-      el.setAttribute eventName, 'return;'
-      isSupported = typeof el[eventName] == 'function'
+      try
+        el.setAttribute eventName, 'return;'
+        isSupported = typeof el[eventName] == 'function'
     el = null
     isSupported
 
@@ -130,9 +131,10 @@ checks =
       console.error "Could not create the view model for template '#{name}'. Creating a view model requires an object or a function that returns an object." + ref tag
 
   '$default': (bindArg) ->
-    if not isEventSupported(bindArg.bindName)
-      name = templateName bindArg.templateInstance
-      console.error "There isn't a bind or event called '#{bindArg.bindName}' on template '#{name}'." + ref 'bindings'
+    for event in bindArg.bindName.split(' ')
+      if not isEventSupported(event)
+        name = templateName bindArg.templateInstance
+        console.error "There isn't a bind or event called '#{event}' on template '#{name}'." + ref 'bindings'
 
   '@saveUrl': (viewmodel) ->
     tag = 'misc#stateonurl'
