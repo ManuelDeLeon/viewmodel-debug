@@ -246,20 +246,6 @@ describe "VmChecks", ->
         VmCheck "#constructor", { persist: {} }
         assert.isTrue @errorStub.called
 
-  describe "$default", ->
-    it "accepts input", ->
-      VmCheck '$default', { bindName: 'input' }
-      assert.isFalse @errorStub.called
-
-    it "rejects XAXA", ->
-      bindArg =
-        bindName: 'XAXA'
-        templateInstance:
-          view:
-            name: 'Template.A'
-      VmCheck '$default', bindArg
-      assert.isTrue @errorStub.called
-
   describe "@saveUrl", ->
     it "accepts vm without _id and vmTag", ->
       vm = {}
