@@ -2,7 +2,8 @@ ref = (tag) -> " See https://viewmodel.org/docs/#{tag} for more information."
 isObject = (obj) -> _.isObject(obj) and !(obj instanceof Array) and !_.isFunction(obj)
 
 templateName = (template) ->
-  name = template.viewName or template.view.name
+  name = template.viewName or template.view?.name
+  return '?' if not name
   if name is 'body' then name else name.substr(name.indexOf('.') + 1)
 
 parentTemplate = (templateInstance) ->
@@ -12,7 +13,6 @@ parentTemplate = (templateInstance) ->
       return view.templateInstance()
     view = view.parentView
   return
-
 
 checks =
   '@addBinding': (binding) ->
@@ -113,6 +113,11 @@ checks =
     if viewmodel._id and not viewmodel.vmTag
       name = templateName viewmodel.templateInstance
       console.error "If you're going to put '_id' on the url you must define a 'vmTag' on the view model. This is for the view model for template '#{name}'." + ref tag
+
+  'refBinding': (bindArg) ->
+    if bindArg.viewmodel[bindArg.bindValue]
+      name = templateName bindArg.viewmodel.templateInstance
+      console.error "The view model for template '#{name}' already has a property '#{bindArg.bindValue}'. You're trying to use it as the name for a ref binding."
 
 VmCheck = (key, args...) ->
   if checks[key]
