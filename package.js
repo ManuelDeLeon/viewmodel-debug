@@ -27,7 +27,8 @@ Package.onTest(function(api) {
     'coffeescript@1.0.6',
     'underscore@1.0.3',
     'practicalmeteor:mocha',
-    'practicalmeteor:sinon'
+    'practicalmeteor:sinon',
+    'practicalmeteor:chai'
   ], CLIENT);
 
   api.addFiles([
