@@ -115,9 +115,12 @@ checks =
       console.error "If you're going to put '_id' on the url you must define a 'vmTag' on the view model. This is for the view model for template '#{name}'." + ref tag
 
   'refBinding': (bindArg) ->
-    if bindArg.viewmodel[bindArg.bindValue]
+    if bindArg.viewmodel[bindArg.bindValue] and not bindArg.viewmodel.vmDebugChecked?[bindArg.bindValue]
       name = templateName bindArg.viewmodel.templateInstance
       console.error "The view model for template '#{name}' already has a property '#{bindArg.bindValue}'. You're trying to use it as the name for a ref binding."
+    else
+      bindArg.viewmodel.vmDebugChecked = {} unless bindArg.viewmodel.vmDebugChecked 
+      bindArg.viewmodel.vmDebugChecked[bindArg.bindValue] = true
 
 VmCheck = (key, args...) ->
   if checks[key]
