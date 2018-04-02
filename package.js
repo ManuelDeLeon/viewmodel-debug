@@ -1,7 +1,7 @@
 Package.describe({
   name: 'manuel:viewmodel-debug',
   summary: "Debug information for the ViewModel package.",
-  version: "2.7.1",
+  version: "2.7.2",
   git: "https://github.com/ManuelDeLeon/viewmodel-debug",
   debugOnly: true
 });
@@ -10,7 +10,7 @@ var CLIENT = 'client';
 
 Package.onUse(function(api) {
   api.use([
-    'coffeescript@1.0.6',
+    'coffeescript@2.0.3_4',
     'underscore@1.0.3'
   ], CLIENT);
 
@@ -24,7 +24,7 @@ Package.onUse(function(api) {
 
 Package.onTest(function(api) {
   api.use([
-    'coffeescript@1.0.6',
+    'coffeescript@2.0.3_4',
     'underscore@1.0.3',
     'practicalmeteor:mocha',
     'practicalmeteor:sinon',
